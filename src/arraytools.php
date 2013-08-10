@@ -23,5 +23,16 @@ final class ArrayTools
         else
             return $array[$key] = array($value);
     }
+
+    public static function pop(&$array, $key, $default=null)
+    {
+        if (array_key_exists($key, $array)) {
+            $value = $array[$key];
+            unset($array[$key]);
+            return $value;
+        } else {
+            return $default;
+        }
+    }
 }
 

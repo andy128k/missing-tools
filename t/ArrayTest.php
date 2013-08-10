@@ -39,5 +39,24 @@ class ArrayToolsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('green', 'sweet'), $arr['apple']);
         $this->assertEquals(array('orange', 'long'), $arr['carrot']);
     }
+
+    public function testPop()
+    {
+        $arr = array(
+            'apple' => 100,
+            'grapefruit' => 400,
+            'carrot' => 50,
+        );
+
+        $apple = ArrayTools::pop($arr, 'apple');
+        $this->assertEquals(false, array_key_exists('apple', $arr));
+        $this->assertEquals(100, $apple);
+
+        $apple = ArrayTools::pop($arr, 'apple');
+        $this->assertEquals(null, $apple);
+
+        $apple = ArrayTools::pop($arr, 'apple', 'what?');
+        $this->assertEquals('what?', $apple);
+    }
 }
 
