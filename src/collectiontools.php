@@ -13,13 +13,23 @@ final class Collections
         $count = count($collection);
         $r = $count % $columnsCount;
         $length = ($count - $r) / $columnsCount;
-        $columns = array();
-        $offset = 0;
+
+        $columnLengths = array();
         for ($i = 0; $i < $columnsCount; ++$i) {
-            $l = $length + ($i < $r ? 1 : 0);
-            $columns[] = array_slice($collection, $offset, $l);
-            $offset += $l;
+            $columnLengths[] = $length + ($i < $r ? 1 : 0);
         }
+
+        $column = array();
+        $columnIndex = 0;
+        foreach ($collection as $item) {
+            if (count($column) >= $columnLengths[$columnIndex]) {
+                $columns[] = $column;
+                $column = array();
+                $columnIndex++;
+            }
+            $column[] = $item;
+        }
+        $columns[] = $column;
         return $columns;
     }
 
