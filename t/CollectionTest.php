@@ -30,5 +30,19 @@ class CollectionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($chunks[0]));
         $this->assertEquals(1, count($chunks[1]));
     }
+
+    public function testChunksPad()
+    {
+        $arr = array(
+            'apple',
+            'grapefruit',
+            'carrot',
+            'tomato',
+        );
+        $chunks = Collections::chunks($arr, 3, true);
+        $this->assertEquals(2, count($chunks));
+        $this->assertEquals(3, count($chunks[0]));
+        $this->assertEquals(3, count($chunks[1]));
+    }
 }
 

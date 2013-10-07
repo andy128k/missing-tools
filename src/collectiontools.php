@@ -46,9 +46,12 @@ final class Collections
         }
         $c = count($chunk);
         if ($c != 0) {
-            if ($pad)
-                while ($c < $size)
+            if ($pad) {
+                while ($c < $size) {
                     $chunk[] = null;
+                    ++$c;
+                }
+            }
             $result[] = $chunk;
         }
         return $result;
