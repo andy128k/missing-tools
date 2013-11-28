@@ -33,6 +33,21 @@ class Tag
         return $this;
     }
 
+    public function attrs($attributes)
+    {
+        foreach ($attributes as $k => $v) {
+            if ($k == 'class') {
+                if (!is_array($v))
+                    $v = explode(' ', $v);
+                foreach ($v as $class)
+                    $this->addClass($class);
+            } else {
+                $this->attributes[$k] = $v;
+            }
+        }
+        return $this;
+    }
+
     private function getListAttribute($name)
     {
         $classes = isset($this->attributes[$name]) ? $this->attributes[$name] : array();
