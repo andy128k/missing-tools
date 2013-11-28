@@ -24,11 +24,13 @@ class Tag
     public function attr($name, $value)
     {
         $this->attributes[$name] = $value;
+        return $this;
     }
 
     public function unsetAttr($name)
     {
         unset($this->attributes[$name]);
+        return $this;
     }
 
     private function getListAttribute($name)
@@ -45,6 +47,7 @@ class Tag
         if (!in_array($class, $classes))
             $classes[] = $class;
         $this->attributes['class'] = $classes;
+        return $this;
     }
 
     public function removeClass($class)
@@ -54,6 +57,7 @@ class Tag
         if ($k !== false)
             unset($classes[$k]);
         $this->attributes['class'] = $classes;
+        return $this;
     }
 
     public function append($item)
