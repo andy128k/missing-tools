@@ -11,8 +11,17 @@
   "autoload": {
     "classmap" : ["src"]
   },
+  "require": {
+    "andy128k/pegp": "dev-master"
+  },
   "require-dev": {
     "phpunit/phpunit": "3.7.*"
-  }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://packages.andy128k.net/php/"
+    }
+  ]
 }
 
