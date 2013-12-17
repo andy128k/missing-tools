@@ -58,12 +58,18 @@ abstract class CLI
         foreach ($this->commands() as $cmd) {
             list($key, $method, $description) = $cmd;
             if ($key === $command) {
-                if (method_exists($this, $method)) {
-                    return call_user_func_array(array($this, $method), $command_args);
-                } else {
-                    echo "Method $method is not defined.\n";
+                $m = new \ReflectionMethod(get_class($this), $method);
+                if ($m->getNumberOfRequiredParameters() > count($command_args)) {
+                    $params = $m->getParameters();
+                    $names = array();
+                    for ($i = count($command_args); $i < $m->getNumberOfRequiredParameters(); ++$i) {
+                        $names[] = $params[$i]->name;
+                    }
+                    echo 'Missing required parameters: '.implode(', ', $names)."\n";
                     return 1;
                 }
+
+                return $m->invokeArgs($this, $command_args);
             }
         }
 
