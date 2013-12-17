@@ -1,5 +1,7 @@
 <?php
 
+namespace PFF;
+
 class Regexp
 {
     public static function email()

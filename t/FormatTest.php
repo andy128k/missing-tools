@@ -1,36 +1,36 @@
 <?php
 
-class Format_Test extends PHPUnit_Framework_TestCase
+class FormatTest extends PHPUnit_Framework_TestCase
 {
     public function testFlags()
     {
-        $this->assertEquals(DateFormat::DATE_DEFAULT,  DateFormat::DATE_BIG_ENDIAN    | DateFormat::DATE_HYPHENS);
-        $this->assertEquals(DateFormat::DATE_US,       DateFormat::DATE_MIDDLE_ENDIAN | DateFormat::DATE_SLASHES);
-        $this->assertEquals(DateFormat::DATE_EUROPEAN, DateFormat::DATE_LITTLE_ENDIAN | DateFormat::DATE_DOTS);
+        $this->assertEquals(\PFF\DateFormat::DATE_DEFAULT,  \PFF\DateFormat::DATE_BIG_ENDIAN    | \PFF\DateFormat::DATE_HYPHENS);
+        $this->assertEquals(\PFF\DateFormat::DATE_US,       \PFF\DateFormat::DATE_MIDDLE_ENDIAN | \PFF\DateFormat::DATE_SLASHES);
+        $this->assertEquals(\PFF\DateFormat::DATE_EUROPEAN, \PFF\DateFormat::DATE_LITTLE_ENDIAN | \PFF\DateFormat::DATE_DOTS);
     }
 
     public function testDateFlagsFromString()
     {
-        $this->assertEquals(DateFormat::DATE_DEFAULT,  DateFormat::dateFlagsFromString('Default'));
-        $this->assertEquals(DateFormat::DATE_DEFAULT,  DateFormat::dateFlagsFromString('Big-endian hyphEns'));
-        $this->assertEquals(DateFormat::DATE_EUROPEAN, DateFormat::dateFlagsFromString('European'));
-        $this->assertEquals(DateFormat::DATE_EUROPEAN, DateFormat::dateFlagsFromString('little-endian dots'));
-        $this->assertEquals(DateFormat::DATE_US,       DateFormat::dateFlagsFromString('US'));
-        $this->assertEquals(DateFormat::DATE_US,       DateFormat::dateFlagsFromString('Middle-Endian Slashes'));
-        $this->assertEquals(DateFormat::DATE_BIG_ENDIAN | DateFormat::DATE_SPACES,
-                                                       DateFormat::dateFlagsFromString('big-endian spaces'));
+        $this->assertEquals(\PFF\DateFormat::DATE_DEFAULT,  \PFF\DateFormat::dateFlagsFromString('Default'));
+        $this->assertEquals(\PFF\DateFormat::DATE_DEFAULT,  \PFF\DateFormat::dateFlagsFromString('Big-endian hyphEns'));
+        $this->assertEquals(\PFF\DateFormat::DATE_EUROPEAN, \PFF\DateFormat::dateFlagsFromString('European'));
+        $this->assertEquals(\PFF\DateFormat::DATE_EUROPEAN, \PFF\DateFormat::dateFlagsFromString('little-endian dots'));
+        $this->assertEquals(\PFF\DateFormat::DATE_US,       \PFF\DateFormat::dateFlagsFromString('US'));
+        $this->assertEquals(\PFF\DateFormat::DATE_US,       \PFF\DateFormat::dateFlagsFromString('Middle-Endian Slashes'));
+        $this->assertEquals(\PFF\DateFormat::DATE_BIG_ENDIAN | \PFF\DateFormat::DATE_SPACES,
+                                                               \PFF\DateFormat::dateFlagsFromString('big-endian spaces'));
     }
 
     public function testDatetimeFlagsFromString()
     {
-        $this->assertEquals(DateFormat::DATETIME_DEFAULT,  DateFormat::datetimeFlagsFromString('Default'));
-        $this->assertEquals(DateFormat::DATETIME_DEFAULT,  DateFormat::datetimeFlagsFromString('Big-endian hyphEns 24'));
-        $this->assertEquals(DateFormat::DATETIME_EUROPEAN, DateFormat::datetimeFlagsFromString('European'));
-        $this->assertEquals(DateFormat::DATETIME_EUROPEAN, DateFormat::datetimeFlagsFromString('little-endian dots 24'));
-        $this->assertEquals(DateFormat::DATETIME_US,       DateFormat::datetimeFlagsFromString('US'));
-        $this->assertEquals(DateFormat::DATETIME_US,       DateFormat::datetimeFlagsFromString('Middle-Endian Slashes 12-upper'));
-        $this->assertEquals(DateFormat::DATE_BIG_ENDIAN | DateFormat::DATE_SPACES | DateFormat::TIME_12HOURS_LOWER | DateFormat::TIME_SECONDS,
-                                                           DateFormat::datetimeFlagsFromString("big-endian spaces \n 12-lower Seconds"));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_DEFAULT,  \PFF\DateFormat::datetimeFlagsFromString('Default'));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_DEFAULT,  \PFF\DateFormat::datetimeFlagsFromString('Big-endian hyphEns 24'));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_EUROPEAN, \PFF\DateFormat::datetimeFlagsFromString('European'));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_EUROPEAN, \PFF\DateFormat::datetimeFlagsFromString('little-endian dots 24'));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_US,       \PFF\DateFormat::datetimeFlagsFromString('US'));
+        $this->assertEquals(\PFF\DateFormat::DATETIME_US,       \PFF\DateFormat::datetimeFlagsFromString('Middle-Endian Slashes 12-upper'));
+        $this->assertEquals(\PFF\DateFormat::DATE_BIG_ENDIAN | \PFF\DateFormat::DATE_SPACES | \PFF\DateFormat::TIME_12HOURS_LOWER | \PFF\DateFormat::TIME_SECONDS,
+                                                               \PFF\DateFormat::datetimeFlagsFromString("big-endian spaces \n 12-lower Seconds"));
     }
 }
 

@@ -1,6 +1,8 @@
 <?php
 
-final class StringTools
+namespace PFF;
+
+final class Str
 {
     public static function startsWith($haystack, $needle)
     {

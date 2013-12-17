@@ -1,6 +1,8 @@
 <?php
 
-final class ArrayTools
+namespace PFF;
+
+final class Arr
 {
     public static function get($array, $key, $default=null)
     {
@@ -33,6 +35,15 @@ final class ArrayTools
         } else {
             return $default;
         }
+    }
+
+    public static function flatten($array)
+    {
+        $result = array();
+        array_walk_recursive($array, function ($value) use (&$result) {
+            $result[] = $value;
+        });
+        return $result;
     }
 }
 

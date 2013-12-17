@@ -1,6 +1,6 @@
 <?php
 
-class SomeMixin extends Mixin
+class SomeMixin extends \PFF\Mixin
 {
     public function getSmthUseful()
     {
@@ -13,7 +13,7 @@ class SomeMixin extends Mixin
     }
 }
 
-class WrapMixin extends Mixin
+class WrapMixin extends \PFF\Mixin
 {
     public function getSmthUseful()
     {
@@ -26,7 +26,7 @@ class WrapMixin extends Mixin
     }
 }
 
-class Mixture extends Mixable
+class Mixture extends \PFF\Mixable
 {
     protected function __mixins() { return array('SomeMixin', 'WrapMixin'); }
 

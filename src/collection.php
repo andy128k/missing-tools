@@ -1,6 +1,8 @@
 <?php
 
-final class Collections
+namespace PFF;
+
+final class Collection
 {
     /*
      * Example output:

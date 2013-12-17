@@ -1,6 +1,6 @@
 <?php
 
-class ArrayToolsTest extends PHPUnit_Framework_TestCase
+class ArrTest extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
@@ -10,9 +10,9 @@ class ArrayToolsTest extends PHPUnit_Framework_TestCase
             'carrot' => 50,
         );
 
-        $this->assertEquals(400, ArrayTools::get($arr, 'grapefruit'));
-        $this->assertEquals(null, ArrayTools::get($arr, 'orange'));
-        $this->assertEquals('no-oranges', ArrayTools::get($arr, 'orange', 'no-oranges'));
+        $this->assertEquals(400, \PFF\Arr::get($arr, 'grapefruit'));
+        $this->assertEquals(null, \PFF\Arr::get($arr, 'orange'));
+        $this->assertEquals('no-oranges', \PFF\Arr::get($arr, 'orange', 'no-oranges'));
     }
 
     public function testEnsureKeyExists()
@@ -24,7 +24,7 @@ class ArrayToolsTest extends PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals(false, array_key_exists('orange', $arr));
-        ArrayTools::ensureKeyExists($arr, 'orange');
+        \PFF\Arr::ensureKeyExists($arr, 'orange');
         $this->assertEquals(true, array_key_exists('orange', $arr));
     }
 
@@ -32,9 +32,9 @@ class ArrayToolsTest extends PHPUnit_Framework_TestCase
     {
         $arr = array('carrot' => array('orange'));
 
-        ArrayTools::pushToKey($arr, 'apple', 'green');
-        ArrayTools::pushToKey($arr, 'carrot', 'long');
-        ArrayTools::pushToKey($arr, 'apple', 'sweet');
+        \PFF\Arr::pushToKey($arr, 'apple', 'green');
+        \PFF\Arr::pushToKey($arr, 'carrot', 'long');
+        \PFF\Arr::pushToKey($arr, 'apple', 'sweet');
 
         $this->assertEquals(array('green', 'sweet'), $arr['apple']);
         $this->assertEquals(array('orange', 'long'), $arr['carrot']);
@@ -48,15 +48,22 @@ class ArrayToolsTest extends PHPUnit_Framework_TestCase
             'carrot' => 50,
         );
 
-        $apple = ArrayTools::pop($arr, 'apple');
+        $apple = \PFF\Arr::pop($arr, 'apple');
         $this->assertEquals(false, array_key_exists('apple', $arr));
         $this->assertEquals(100, $apple);
 
-        $apple = ArrayTools::pop($arr, 'apple');
+        $apple = \PFF\Arr::pop($arr, 'apple');
         $this->assertEquals(null, $apple);
 
-        $apple = ArrayTools::pop($arr, 'apple', 'what?');
+        $apple = \PFF\Arr::pop($arr, 'apple', 'what?');
         $this->assertEquals('what?', $apple);
+    }
+
+    public function testFlatten()
+    {
+        $arr = array('a', 'b', array(array(array('x'), 'y', 'z')), array(array('p')));
+        $flat = \PFF\Arr::flatten($arr);
+        $this->assertEquals(array('a', 'b', 'x', 'y', 'z', 'p'), $flat);
     }
 }
 

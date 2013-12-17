@@ -1,5 +1,7 @@
 <?php
 
+namespace PFF;
+
 class Mixins
 {
     private $methods = array();

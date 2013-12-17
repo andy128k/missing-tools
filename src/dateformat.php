@@ -1,5 +1,9 @@
 <?php
 
+namespace PFF;
+
+use \Pegp as Pegp;
+
 final class DateFormat
 {
     const DATE_BIG_ENDIAN     =  0;
