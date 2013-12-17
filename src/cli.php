@@ -32,7 +32,13 @@ abstract class CLI
         $pad = floor(($max_len + 11) / 8) * 8;
         foreach ($cmds as $cmd) {
             list($key, $method, $description) = $cmd;
-            echo "    ".str_pad($key, $pad).$description."\n";
+
+            $prefix = "    ".str_pad($key, $pad);
+            foreach (explode("\n", $description) as $dsc) {
+                echo $prefix.$dsc."\n";
+                $prefix = str_repeat(' ', $pad + 4);
+            }
+            
         }
         echo "\n";
     }
