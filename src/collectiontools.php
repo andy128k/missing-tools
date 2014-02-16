@@ -57,11 +57,34 @@ final class Collections
         return $result;
     }
 
+    public static function groupBy($collection, $key)
+    {
+        $groups = array();
+        foreach ($collection as $item)
+            ArrayTools::pushToKey($groups, call_user_func($key, $item), $item);
+        return $groups;
+    }
+
     public static function groupByProperty($collection, $propertyName)
     {
         $groups = array();
         foreach ($collection as $item) {
             $key = $item->$propertyName;
+            ArrayTools::pushToKey($groups, $key, $item);
+        }
+        return $groups;
+    }
+
+    public static function groupByMethod(/*$collection, $methodName, ...$args*/)
+    {
+        $args = func_get_args();
+        $collection = $args[0];
+        $methodName = $args[1];
+        $methodArgs = array_slice($args, 2);
+
+        $groups = array();
+        foreach ($collection as $item) {
+            $key = call_user_func_array(array($item, $methodName), $methodArgs);
             ArrayTools::pushToKey($groups, $key, $item);
         }
         return $groups;
