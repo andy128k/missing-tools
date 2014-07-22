@@ -44,5 +44,19 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($chunks[0]));
         $this->assertEquals(3, count($chunks[1]));
     }
+
+    public function testGroupByProperty()
+    {
+        $arr = array(
+            (object)array('name' => 'apple',      'color' => 'green'),
+            (object)array('name' => 'carrot',     'color' => 'red'),
+            (object)array('name' => 'tomato',     'color' => 'red'),
+            (object)array('name' => 'grapefruit', 'color' => 'green'),
+        );
+        $groups = \PFF\Collection::groupByProperty($arr, 'color');
+        $this->assertEquals(2, count($groups));
+        $this->assertEquals(2, count($groups['red']));
+        $this->assertEquals(2, count($groups['green']));
+    }
 }
 

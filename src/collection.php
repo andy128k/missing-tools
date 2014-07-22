@@ -58,5 +58,15 @@ final class Collection
         }
         return $result;
     }
+
+    public static function groupByProperty($collection, $propertyName)
+    {
+        $groups = array();
+        foreach ($collection as $item) {
+            $key = $item->$propertyName;
+            Arr::pushToKey($groups, $key, $item);
+        }
+        return $groups;
+    }
 }
 
