@@ -4,21 +4,32 @@ namespace PFF\HtmlBuilder;
 
 class Tag
 {
-    private $name, $selfClose, $attributes, $inner;
+    private $name, $selfClose, $attributes, $inner=array();
 
-    public function __construct($name, $attributes=array(), $inner=array())
+    public function __construct($name, $attributes=array(), $inner=null)
     {
         $this->name = $name;
         $this->attributes = (array)$attributes;
-        $this->inner = (array)$inner;
         $this->selfClose = in_array($name, array("base", "basefont", "br", "col", "frame", "hr", "input", "link", "meta", "param"));
+
+        if (!is_array($inner))
+            $inner = array($inner);
+        foreach ($inner as $item)
+            $this->append($item);
+    }
+
+    public static function create(/*name[, attributes, [... inner]]*/)
+    {
+        $args = func_get_args();
+        $name = array_shift($args);
+        $attributes = array_shift($args);
+        return new Tag($name, $attributes, $args);
     }
 
     public static function __callStatic($method, $args)
     {
         $attributes = array_shift($args);
-        $inner = array_shift($args);
-        return new Tag($method, $attributes, $inner);
+        return new Tag($method, $attributes, $args);
     }
 
     public function attr($name, $value)
@@ -77,16 +88,24 @@ class Tag
 
     public function append($item)
     {
-        if ($item instanceof Tag)
+        if (is_array($item)) {
+            foreach ($item as $i)
+                $this->append($i);
+        } elseif ($item instanceof Tag) {
             $this->inner[] = $item;
-        else
+        } else {
             $this->inner[] = htmlspecialchars($item, ENT_COMPAT, 'UTF-8');
+        }
         return $this;
     }
 
     public function raw($raw)
     {
-        $this->inner[] = $raw;
+        if (is_array($raw)) {
+            $this->inner = array_merge($this->inner, \PFF\Arr::flatten($raw));
+        } else {
+            $this->inner[] = $raw;
+        }
         return $this;
     }
 
