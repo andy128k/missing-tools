@@ -2,9 +2,12 @@
 
 namespace PFF\HtmlBuilder;
 
-function escape($text)
+class Text
 {
-    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    public static function escape($text)
+    {
+        return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    }
 }
 
 class Tag
@@ -113,7 +116,7 @@ class Tag
         } elseif ($item instanceof Tag) {
             $this->inner[] = $item;
         } else {
-            $this->inner[] = escape($item);
+            $this->inner[] = Text::escape($item);
         }
         return $this;
     }
@@ -134,7 +137,7 @@ class Tag
         foreach ($this->attributes as $k => $v) {
             if (is_array($v))
                 $v = implode(' ', $v);
-            $s .= ' '.$k.'="'.escape($v).'"';
+            $s .= ' '.$k.'="'.Text::escape($v).'"';
         }
         $s .= '>';
 
