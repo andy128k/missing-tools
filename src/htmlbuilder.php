@@ -2,6 +2,11 @@
 
 namespace PFF\HtmlBuilder;
 
+function escape($text)
+{
+    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+}
+
 class Tag
 {
     private $name, $selfClose, $attributes, $inner=array();
@@ -86,6 +91,20 @@ class Tag
         return $this;
     }
 
+    public function toggleAttr($name, $value, $condition)
+    {
+        return $condition
+            ? $this->attr($name, $value)
+            : $this->unsetAttr($name);
+    }
+
+    public function toggleClass($class, $condition)
+    {
+        return $condition
+            ? $this->addClass($class)
+            : $this->removeClass($class);
+    }
+
     public function append($item)
     {
         if (is_array($item)) {
@@ -94,7 +113,7 @@ class Tag
         } elseif ($item instanceof Tag) {
             $this->inner[] = $item;
         } else {
-            $this->inner[] = htmlspecialchars($item, ENT_COMPAT, 'UTF-8');
+            $this->inner[] = escape($item);
         }
         return $this;
     }
@@ -115,7 +134,7 @@ class Tag
         foreach ($this->attributes as $k => $v) {
             if (is_array($v))
                 $v = implode(' ', $v);
-            $s .= ' '.$k.'="'.htmlspecialchars($v, ENT_COMPAT, 'UTF-8').'"';
+            $s .= ' '.$k.'="'.escape($v).'"';
         }
         $s .= '>';
 
