@@ -11,7 +11,7 @@ class Container
     public function getWithArgs($id, $args)
     {
         if (!array_key_exists($id, $this->values))
-            throw new InvalidArgumentException('Identifier "'.$id.'" is not defined.');
+            throw new \InvalidArgumentException('Identifier "'.$id.'" is not defined.');
 
         $v = $this->values[$id];
         if ($v[0] == 'function') {
