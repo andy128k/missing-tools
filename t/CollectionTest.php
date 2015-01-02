@@ -58,5 +58,20 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($groups['red']));
         $this->assertEquals(2, count($groups['green']));
     }
+
+    public function testInits()
+    {
+        $this->assertEquals(array(array()),
+            \PFF\Collection::inits(array()));
+
+        $this->assertEquals(array(array(), array('1')),
+            \PFF\Collection::inits(array('1')));
+
+        $this->assertEquals(array(array(), array('1'), array('1', 2)),
+            \PFF\Collection::inits(array('1', 2)));
+
+        $this->assertEquals(array(array(), array(1), array(1, '2'), array(1, '2', 3)),
+            \PFF\Collection::inits(array(1, '2', 3)));
+    }
 }
 

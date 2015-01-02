@@ -91,5 +91,19 @@ final class Collection
         }
         return $groups;
     }
+
+    public static function inits($collection)
+    {
+        $result = array();
+        $init = array();
+
+        $result[] = $init;
+        foreach ($collection as $item) {
+            $init = array_merge($init, array($item));
+            $result[] = $init;
+        }
+
+        return $result;
+    }
 }
 
