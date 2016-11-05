@@ -10,7 +10,7 @@ class Mixins
     {
         foreach ($mixins as $class) {
             if (!class_exists($class))
-                throw new Exception('Tried to inherit non-existant class \''.$class.'\'.');
+                throw new \Exception('Tried to inherit non-existant class \''.$class.'\'.');
 
             $mixin = new $class($object);
             $methods = get_class_methods($mixin);
@@ -27,7 +27,7 @@ class Mixins
     {
         $m = strtolower($method);
         if (!isset($this->methods[$m]))
-            throw new Exception('Call to undefined method ' . get_class($this) . "::$method()");
+            throw new \Exception('Call to undefined method ' . get_class($this) . "::$method()");
 
         $this->current_call_method = $method;
         $this->current_call_mixins = $this->methods[$m];
@@ -40,11 +40,11 @@ class Mixins
     public function call_next_method()
     {
         if ($this->current_call_mixins === null)
-            throw new Exception('call_next_method is invoked outside of mixin method.');
+            throw new \Exception('call_next_method is invoked outside of mixin method.');
 
         $mixin = array_pop($this->current_call_mixins);
         if ($mixin === null)
-            throw new Exception('No next method for ' . get_class($this) . "::$method()");
+            throw new \Exception('No next method for ' . get_class($this) . "::$method()");
 
         return call_user_func_array(array($mixin, $this->current_call_method), func_get_args());
     }

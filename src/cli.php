@@ -11,7 +11,7 @@ abstract class CLI
             return $argv;
         if (@is_array($_SERVER['argv']))
             return $_SERVER['argv'];
-        throw new Exception("Could not read command arguments (register_argc_argv=Off?)");
+        throw new \Exception("Could not read command arguments (register_argc_argv=Off?)");
     }
 
     protected abstract function commands();
@@ -86,4 +86,3 @@ abstract class CLI
         }
     }
 }
-

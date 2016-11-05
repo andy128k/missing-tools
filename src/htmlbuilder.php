@@ -4,6 +4,10 @@ namespace PFF\HtmlBuilder;
 
 class Text
 {
+    /**
+     * @param string $text
+     * @return string
+     */
     public static function escape($text)
     {
         return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
@@ -14,6 +18,11 @@ class Tag
 {
     private $name, $selfClose, $attributes, $inner=array();
 
+    /**
+     * @param string $name
+     * @param array $attributes
+     * @param mixed|null $inner
+     */
     public function __construct($name, $attributes=array(), $inner=null)
     {
         $this->name = $name;
@@ -26,6 +35,9 @@ class Tag
             $this->append($item);
     }
 
+    /**
+     * @return Tag
+     */
     public static function create(/*name[, attributes, [... inner]]*/)
     {
         $args = func_get_args();
@@ -34,25 +46,43 @@ class Tag
         return new Tag($name, $attributes, $args);
     }
 
-    public static function __callStatic($method, $args)
+    /**
+     * @param string $name
+     * @param array $args
+     * @return Tag
+     */
+    public static function __callStatic($name, $args)
     {
         $attributes = array_shift($args);
-        return new Tag($method, $attributes, $args);
+        return new Tag($name, $attributes, $args);
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     * @return Tag
+     */
     public function attr($name, $value)
     {
         $this->attributes[$name] = $value;
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @return Tag
+     */
     public function unsetAttr($name)
     {
         unset($this->attributes[$name]);
         return $this;
     }
 
-    public function attrs($attributes)
+    /**
+     * @param array $attributes dictionary
+     * @return Tag
+     */
+    public function attrs(array $attributes)
     {
         foreach ($attributes as $k => $v) {
             if ($k == 'class') {
@@ -74,7 +104,11 @@ class Tag
             $classes = explode(' ', $classes);
         return $classes;
     }
-    
+
+    /**
+     * @param string $class
+     * @return Tag
+     */
     public function addClass($class)
     {
         $classes = $this->getListAttribute('class');
@@ -84,6 +118,10 @@ class Tag
         return $this;
     }
 
+    /**
+     * @param string $class
+     * @return Tag
+     */
     public function removeClass($class)
     {
         $classes = $this->getListAttribute('class');
@@ -94,6 +132,12 @@ class Tag
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @param boolean $condition
+     * @return Tag
+     */
     public function toggleAttr($name, $value, $condition)
     {
         return $condition
@@ -101,6 +145,11 @@ class Tag
             : $this->unsetAttr($name);
     }
 
+    /**
+     * @param string $class
+     * @param boolean $condition
+     * @return Tag
+     */
     public function toggleClass($class, $condition)
     {
         return $condition
@@ -108,6 +157,10 @@ class Tag
             : $this->removeClass($class);
     }
 
+    /**
+     * @param mixed $item
+     * @return Tag
+     */
     public function append($item)
     {
         if (is_array($item)) {
@@ -121,6 +174,10 @@ class Tag
         return $this;
     }
 
+    /**
+     * @param string $raw
+     * @return Tag
+     */
     public function raw($raw)
     {
         if (is_array($raw)) {
@@ -131,6 +188,9 @@ class Tag
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function html()
     {
         $s = '<'.$this->name;
@@ -150,9 +210,11 @@ class Tag
         return $s;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->html();
     }
 }
-

@@ -6,10 +6,10 @@ class Shell
 {
     public static function call()
     {
-        return self::callv(func_get_args());
+        self::callv(func_get_args());
     }
 
-    public static function callv($command)
+    public static function callv(array $command)
     {
         $str = '';
         foreach ($command as $part) {
@@ -24,4 +24,3 @@ class Shell
         proc_close($process);
     }
 }
-

@@ -4,7 +4,13 @@ namespace PFF;
 
 final class Arr
 {
-    public static function get($array, $key, $default=null)
+    /**
+     * @param array $array
+     * @param string|integer $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function get(array $array, $key, $default=null)
     {
         if (array_key_exists($key, $array))
             return $array[$key];
@@ -12,21 +18,37 @@ final class Arr
             return $default;
     }
 
-    public static function ensureKeyExists(&$array, $key, $default=null)
+    /**
+     * @param array $array
+     * @param string|integer $key
+     * @param mixed $default
+     */
+    public static function ensureKeyExists(array &$array, $key, $default=null)
     {
         if (!array_key_exists($key, $array))
-            return $array[$key] = $default;
+            $array[$key] = $default;
     }
 
-    public static function pushToKey(&$array, $key, $value)
+    /**
+     * @param array $array
+     * @param string|integer $key
+     * @param mixed $value
+     */
+    public static function pushToKey(array &$array, $key, $value)
     {
         if (array_key_exists($key, $array))
-            return $array[$key][] = $value;
+            $array[$key][] = $value;
         else
-            return $array[$key] = array($value);
+            $array[$key] = array($value);
     }
 
-    public static function pop(&$array, $key, $default=null)
+    /**
+     * @param array $array
+     * @param string|integer $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function pop(array &$array, $key, $default=null)
     {
         if (array_key_exists($key, $array)) {
             $value = $array[$key];
@@ -37,7 +59,11 @@ final class Arr
         }
     }
 
-    public static function flatten($array)
+    /**
+     * @param array $array
+     * @return array
+     */
+    public static function flatten(array $array)
     {
         $result = array();
         array_walk_recursive($array, function ($value) use (&$result) {
@@ -46,7 +72,12 @@ final class Arr
         return $result;
     }
 
-    public static function pluck($array, $key)
+    /**
+     * @param array $array
+     * @param string|integer $key
+     * @return array
+     */
+    public static function pluck(array $array, $key)
     {
         $result = array();
         foreach ($array as $item)
@@ -54,4 +85,3 @@ final class Arr
         return $result;
     }
 }
-

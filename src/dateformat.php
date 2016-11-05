@@ -170,7 +170,7 @@ final class DateFormat
                 $result .= ' '.$controls[6];
                 break;
             default:
-                throw new Exception('Bad time format');
+                throw new \Exception('Bad time format');
         }
         return $result;
     }

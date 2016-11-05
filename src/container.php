@@ -37,13 +37,13 @@ class Container
         switch ($name) {
         case 'set':
             $this->values[$args[0]] = array('value', $args[1]);
-            break;
+            return $this;
         case 'setFunction':
             $this->values[$args[0]] = array('function', $args[1]);
-            break;
+            return $this;
         case 'setFactory':
             $this->values[$args[0]] = array('factory', $args[1]);
-            break;
+            return $this;
         default:
             return $this->getWithArgs($name, $args);
         }
@@ -63,4 +63,3 @@ class Container
         return call_user_func_array(array(self::getInstance(), $name), $args);
     }
 }
-
