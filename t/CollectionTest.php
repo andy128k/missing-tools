@@ -73,5 +73,44 @@ class CollectionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(array(), array(1), array(1, '2'), array(1, '2', 3)),
             \PFF\Collection::inits(array(1, '2', 3)));
     }
-}
 
+    public function testIndexByPropertyWithObjects() {
+        $o1 = (object)array('id' => 1, 'name' => 'first');
+        $o2 = (object)array('id' => 2, 'name' => 'second');
+        $o3 = (object)array('id' => 3, 'name' => 'third');
+        $this->assertEquals(
+            array(1 => $o1, 2 => $o2, 3 => $o3),
+            \PFF\Collection::indexByProperty(array($o1, $o2, $o3), 'id')
+        );
+    }
+
+    public function testIndexByPropertyWithArrays() {
+        $o1 = array('id' => 1, 'name' => 'first');
+        $o2 = array('id' => 2, 'name' => 'second');
+        $o3 = array('id' => 3, 'name' => 'third');
+        $this->assertEquals(
+            array(1 => $o1, 2 => $o2, 3 => $o3),
+            \PFF\Collection::indexByProperty(array($o1, $o2, $o3), 'id')
+        );
+    }
+
+    public function testColumnByPropertyWithObjects() {
+        $o1 = (object)array('id' => 1, 'name' => 'first');
+        $o2 = (object)array('id' => 2, 'name' => 'second');
+        $o3 = (object)array('id' => 3, 'name' => 'third');
+        $this->assertEquals(
+            array('first' => 1, 'second' => 2, 'third' => 3),
+            \PFF\Collection::columnByProperty(array($o1, $o2, $o3), 'id', 'name')
+        );
+    }
+
+    public function testColumnByPropertyWithArrays() {
+        $o1 = array('id' => 1, 'name' => 'first');
+        $o2 = array('id' => 2, 'name' => 'second');
+        $o3 = array('id' => 3, 'name' => 'third');
+        $this->assertEquals(
+            array('first' => 1, 'second' => 2, 'third' => 3),
+            \PFF\Collection::columnByProperty(array($o1, $o2, $o3), 'id', 'name')
+        );
+    }
+}

@@ -92,6 +92,33 @@ final class Collection
         return $groups;
     }
 
+    /**
+     * indexByProperty($collection, $propertyName) === array_column($collection, null, $propertyName) for PHP >= 7
+     */
+    public static function indexByProperty($collection, $propertyName)
+    {
+        $groups = array();
+        foreach ($collection as $item) {
+            $key = is_object($item) ? $item->$propertyName : $item[$propertyName];
+            $groups[$key] = $item;
+        }
+        return $groups;
+    }
+
+    /**
+     * columnByProperty($collection, $value, $key) === array_column($collection, $value, $key) for PHP >= 7
+     */
+    public static function columnByProperty($collection, $valueProperty, $keyProperty)
+    {
+        $groups = array();
+        foreach ($collection as $item) {
+            $key = is_object($item) ? $item->$keyProperty : $item[$keyProperty];
+            $value = is_object($item) ? $item->$valueProperty : $item[$valueProperty];
+            $groups[$key] = $value;
+        }
+        return $groups;
+    }
+
     public static function inits($collection)
     {
         $result = array();
