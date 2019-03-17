@@ -2,7 +2,7 @@
 
 namespace PFF;
 
-use \Pegp as Pegp;
+use \Pegp\Pegp as Pegp;
 
 final class DateFormat
 {
