@@ -65,5 +65,17 @@ class ArrTest extends PHPUnit_Framework_TestCase
         $flat = \PFF\Arr::flatten($arr);
         $this->assertEquals(array('a', 'b', 'x', 'y', 'z', 'p'), $flat);
     }
-}
 
+    public function testPluck()
+    {
+        $arr = array(
+            (object)array('name' => 'apple',      'color' => 'green'),
+            (object)array('name' => 'carrot',     'color' => 'red'),
+            (object)array('name' => 'tomato',     'color' => 'red'),
+            (object)array('name' => 'grapefruit', 'color' => 'green'),
+        );
+        $colors = \PFF\Arr::pluck($arr, 'color');
+        $this->assertEquals(4, count($colors));
+        $this->assertEquals(['green', 'red', 'red', 'green'], $colors);
+    }
+}

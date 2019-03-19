@@ -175,7 +175,7 @@ class Tag
     }
 
     /**
-     * @param string $raw
+     * @param string|array $raw
      * @return Tag
      */
     public function raw($raw)

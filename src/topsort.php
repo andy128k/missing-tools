@@ -53,4 +53,3 @@ class TopSort
         return array(true, $sort->result);
     }
 }
-

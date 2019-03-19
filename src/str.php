@@ -15,4 +15,3 @@ final class Str
         return !$length || substr($haystack, -$length) === $needle;
     }
 }
-

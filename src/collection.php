@@ -59,6 +59,11 @@ final class Collection
         return $result;
     }
 
+    /**
+     * @param \Traversable $collection
+     * @param callable $key
+     * @return array
+     */
     public static function groupBy($collection, $key)
     {
         $groups = array();
@@ -67,39 +72,45 @@ final class Collection
         return $groups;
     }
 
+    /**
+     * @param \Traversable $collection
+     * @param string $propertyName
+     * @return array
+     * @throws \Exception
+     */
     public static function groupByProperty($collection, $propertyName)
     {
-        $groups = array();
-        foreach ($collection as $item) {
-            $key = $item->$propertyName;
-            Arr::pushToKey($groups, $key, $item);
-        }
-        return $groups;
+        return self::groupBy($collection, function ($item) use ($propertyName) {
+            return MapLike::get($item, $propertyName);
+        });
     }
 
-    public static function groupByMethod(/*$collection, $methodName, ...$args*/)
+    /**
+     * @param \Traversable $collection
+     * @param string $methodName
+     * @param mixed ...$methodArgs
+     * @return array
+     */
+    public static function groupByMethod($collection, $methodName, ...$methodArgs)
     {
-        $args = func_get_args();
-        $collection = $args[0];
-        $methodName = $args[1];
-        $methodArgs = array_slice($args, 2);
-
-        $groups = array();
-        foreach ($collection as $item) {
-            $key = call_user_func_array(array($item, $methodName), $methodArgs);
-            Arr::pushToKey($groups, $key, $item);
-        }
-        return $groups;
+        return self::groupBy($collection, function ($item) use ($methodArgs, $methodName) {
+            return call_user_func_array(array($item, $methodName), $methodArgs);
+        });
     }
 
     /**
      * indexByProperty($collection, $propertyName) === array_column($collection, null, $propertyName) for PHP >= 7
+     *
+     * @param \Traversable $collection
+     * @param string $propertyName
+     * @return array
+     * @throws \Exception
      */
     public static function indexByProperty($collection, $propertyName)
     {
         $groups = array();
         foreach ($collection as $item) {
-            $key = is_object($item) ? $item->$propertyName : $item[$propertyName];
+            $key = MapLike::get($item, $propertyName);
             $groups[$key] = $item;
         }
         return $groups;
@@ -107,18 +118,28 @@ final class Collection
 
     /**
      * columnByProperty($collection, $value, $key) === array_column($collection, $value, $key) for PHP >= 7
+     *
+     * @param \Traversable $collection
+     * @param string $valueProperty
+     * @param string $keyProperty
+     * @return array
+     * @throws \Exception
      */
     public static function columnByProperty($collection, $valueProperty, $keyProperty)
     {
         $groups = array();
         foreach ($collection as $item) {
-            $key = is_object($item) ? $item->$keyProperty : $item[$keyProperty];
-            $value = is_object($item) ? $item->$valueProperty : $item[$valueProperty];
+            $key = MapLike::get($item, $keyProperty);
+            $value = MapLike::get($item, $valueProperty);
             $groups[$key] = $value;
         }
         return $groups;
     }
 
+    /**
+     * @param \Traversable $collection
+     * @return array
+     */
     public static function inits($collection)
     {
         $result = array();
@@ -133,4 +154,3 @@ final class Collection
         return $result;
     }
 }
-
