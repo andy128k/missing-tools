@@ -141,7 +141,7 @@ final class DateFormat
             case self::DATE_MIDDLE_ENDIAN:
                 return $controls[1].$separator.$controls[2].$separator.$controls[0];
             default:
-                throw new Exception('Bad date format');
+                throw new \Exception('Bad date format');
         }
     }
 

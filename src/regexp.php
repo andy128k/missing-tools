@@ -28,4 +28,3 @@ class Regexp
         return '!^(http|https|ftp|gopher)\://('.$ip.'|'.$dom.')!i';
     }
 }
-

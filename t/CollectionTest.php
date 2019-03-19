@@ -1,5 +1,27 @@
 <?php
 
+class Fruit
+{
+    private $name;
+    private $color;
+
+    function __construct($name, $color)
+    {
+        $this->name = $name;
+        $this->color = $color;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getColor()
+    {
+        return $this->color;
+    }
+}
+
 class CollectionTest extends PHPUnit_Framework_TestCase
 {
     public function testColumns()
@@ -54,6 +76,20 @@ class CollectionTest extends PHPUnit_Framework_TestCase
             (object)array('name' => 'grapefruit', 'color' => 'green'),
         );
         $groups = \PFF\Collection::groupByProperty($arr, 'color');
+        $this->assertEquals(2, count($groups));
+        $this->assertEquals(2, count($groups['red']));
+        $this->assertEquals(2, count($groups['green']));
+    }
+
+    public function testGroupByMethod()
+    {
+        $arr = [
+            new Fruit('apple', 'green'),
+            new Fruit('carrot', 'red'),
+            new Fruit('tomato', 'red'),
+            new Fruit('grapefruit', 'green'),
+        ];
+        $groups = \PFF\Collection::groupByMethod($arr, 'getColor');
         $this->assertEquals(2, count($groups));
         $this->assertEquals(2, count($groups['red']));
         $this->assertEquals(2, count($groups['green']));

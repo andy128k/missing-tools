@@ -36,25 +36,24 @@ class NativeTemplate
 
     private function renderFile($file)
     {
-        $previous = set_error_handler(array($this, '_errorHandler'));
+        $filename = $this->findFile($file);
+
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+            if (error_reporting() & $errno)
+                throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        });
         ob_start();
         try {
-            include $this->findFile($file);
+            include $filename;
         } catch (\Exception $e) {
             ob_end_clean();
-            set_error_handler($previous);
+            restore_error_handler();
             throw $e;
         }
         $output = ob_get_contents();
         ob_end_clean();
-        set_error_handler($previous);
+        restore_error_handler();
         return $output;
-    }
-
-    public function _errorHandler($errno, $errstr, $errfile, $errline)
-    {
-        if (error_reporting() & $errno)
-            throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 
     private function findFile($file)
@@ -87,4 +86,3 @@ class NativeTemplate
         return $this->_content;
     }
 }
-

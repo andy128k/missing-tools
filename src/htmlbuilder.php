@@ -16,14 +16,14 @@ class Text
 
 class Tag
 {
-    private $name, $selfClose, $attributes, $inner=array();
+    private $name, $selfClose, $attributes, $inner = array();
 
     /**
      * @param string $name
      * @param array $attributes
      * @param mixed|null $inner
      */
-    public function __construct($name, $attributes=array(), $inner=null)
+    public function __construct($name, $attributes = array(), $inner = null)
     {
         $this->name = $name;
         $this->attributes = (array)$attributes;
@@ -36,14 +36,14 @@ class Tag
     }
 
     /**
+     * @param string $name
+     * @param array $attributes
+     * @param array $inner
      * @return Tag
      */
-    public static function create(/*name[, attributes, [... inner]]*/)
+    public static function create($name, $attributes = array(), ...$inner)
     {
-        $args = func_get_args();
-        $name = array_shift($args);
-        $attributes = array_shift($args);
-        return new Tag($name, $attributes, $args);
+        return new Tag($name, $attributes, $inner);
     }
 
     /**
@@ -175,7 +175,7 @@ class Tag
     }
 
     /**
-     * @param string $raw
+     * @param string|array $raw
      * @return Tag
      */
     public function raw($raw)
@@ -193,18 +193,18 @@ class Tag
      */
     public function html()
     {
-        $s = '<'.$this->name;
+        $s = '<' . $this->name;
         foreach ($this->attributes as $k => $v) {
             if (is_array($v))
                 $v = implode(' ', $v);
-            $s .= ' '.$k.'="'.Text::escape($v).'"';
+            $s .= ' ' . $k . '="' . Text::escape($v) . '"';
         }
         $s .= '>';
 
         if (!$this->selfClose) {
             foreach ($this->inner as $item)
                 $s .= (string)$item;
-            $s .= '</'.$this->name.'>';
+            $s .= '</' . $this->name . '>';
         }
 
         return $s;
