@@ -49,6 +49,27 @@ class Map
         });
     }
 
+    function update($key, $updater)
+    {
+        foreach ($this->data as &$entry) {
+            if ($this->keysAreEqual($key, $entry[0])) {
+                $entry[1] = call_user_func($updater, $entry[1]);
+                return;
+            }
+        }
+    }
+
+    function updateOrInsert($key, $updater, $valueToInsert)
+    {
+        foreach ($this->data as &$entry) {
+            if ($this->keysAreEqual($key, $entry[0])) {
+                $entry[1] = call_user_func($updater, $entry[1]);
+                return;
+            }
+        }
+        $this->data[] = [$key, $valueToInsert];
+    }
+
     function __debugInfo()
     {
         $i = [];

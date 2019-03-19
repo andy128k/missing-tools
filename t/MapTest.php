@@ -4,30 +4,30 @@ class MapTest extends PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        $arr = new \PFF\Map;
-        $arr->set(['fruit', 'apple'], 100);
-        $arr->set(['fruit', 'grapefruit'], 400);
-        $arr->set(['vegetable', 'carrot'], 50);
+        $map = new \PFF\Map;
+        $map->set(['fruit', 'apple'], 100);
+        $map->set(['fruit', 'grapefruit'], 400);
+        $map->set(['vegetable', 'carrot'], 50);
 
-        $this->assertEquals(3, $arr->count());
-        $this->assertEquals(true, $arr->contains(['fruit', 'grapefruit']));
-        $this->assertEquals(400, $arr->get(['fruit', 'grapefruit']));
-        $this->assertEquals(null, $arr->get(['fruit', 'orange']));
-        $this->assertEquals(false, $arr->contains(['apple', 'fruit']));
-        $this->assertEquals(null, $arr->get(['apple', 'fruit']));
+        $this->assertEquals(3, $map->count());
+        $this->assertEquals(true, $map->contains(['fruit', 'grapefruit']));
+        $this->assertEquals(400, $map->get(['fruit', 'grapefruit']));
+        $this->assertEquals(null, $map->get(['fruit', 'orange']));
+        $this->assertEquals(false, $map->contains(['apple', 'fruit']));
+        $this->assertEquals(null, $map->get(['apple', 'fruit']));
 
-        $this->assertEquals(50, $arr->get(['vegetable', 'carrot']));
-        $arr->set(['vegetable', 'carrot'], 150);
-        $this->assertEquals(150, $arr->get(['vegetable', 'carrot']));
-        $arr->remove(['vegetable', 'carrot']);
-        $this->assertEquals(false, $arr->contains(['vegetable', 'carrot']));
+        $this->assertEquals(50, $map->get(['vegetable', 'carrot']));
+        $map->set(['vegetable', 'carrot'], 150);
+        $this->assertEquals(150, $map->get(['vegetable', 'carrot']));
+        $map->remove(['vegetable', 'carrot']);
+        $this->assertEquals(false, $map->contains(['vegetable', 'carrot']));
     }
 
     public function testDebugInfo()
     {
-        $arr = new \PFF\Map;
-        $arr->set(['fruit', 'apple'], 100);
-        $output = $this->varDumpToString($arr);
+        $map = new \PFF\Map;
+        $map->set(['fruit', 'apple'], 100);
+        $output = $this->varDumpToString($map);
         $this->assertContains('fruit', $output);
         $this->assertContains('apple', $output);
         $this->assertContains('100', $output);
@@ -40,5 +40,39 @@ class MapTest extends PHPUnit_Framework_TestCase
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
+    }
+
+    public function testUpdate()
+    {
+        $map = new \PFF\Map;
+        $map->set('carrot', 1);
+        $map->update('carrot', function ($c) {
+            return $c + 1;
+        });
+        $map->update('tomato', function ($c) {
+            return $c + 1;
+        });
+        $this->assertEquals(2, $map->get('carrot'));
+        $this->assertEquals(null, $map->get('tomato'));
+    }
+
+    public function testUpdateOrInsert()
+    {
+        $map = new \PFF\Map;
+        $map->set('carrot', 1);
+        $map->updateOrInsert('carrot', function ($c) {return $c + 1;}, 1);
+        $map->updateOrInsert('tomato', function ($c) {return $c + 1;}, 1);
+        $this->assertEquals(2, $map->get('carrot'));
+        $this->assertEquals(1, $map->get('tomato'));
+    }
+
+    public function testUpdateOrInsertArray()
+    {
+        $map = new \PFF\Map;
+        $map->set('carrot', [1]);
+        $map->updateOrInsert('carrot', function ($c) {return array_merge($c, [1]);}, [1]);
+        $map->updateOrInsert('tomato', function ($c) {return array_merge($c, [1]);}, [1]);
+        $this->assertEquals([1, 1], $map->get('carrot'));
+        $this->assertEquals([1], $map->get('tomato'));
     }
 }
