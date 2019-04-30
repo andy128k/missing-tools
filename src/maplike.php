@@ -12,6 +12,12 @@ final class MapLike
             } else {
                 return $default;
             }
+        } elseif ($mapLike instanceof \ArrayAccess) {
+            if ($mapLike->offsetExists($key)) {
+                return $mapLike->offsetGet($key);
+            } else {
+                return $default;
+            }
         } elseif (is_object($mapLike)) {
             try {
                 return $mapLike->$key;
