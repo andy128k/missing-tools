@@ -12,16 +12,10 @@
     "classmap" : ["src/"]
   },
   "require": {
-    "php": ">=5.6",
     "andy128k/pegp": "0.2"
   },
   "require-dev": {
     "phpunit/phpunit": "~5"
-  },
-  "config": {
-    "platform": {
-      "php": "5.6.4"
-    }
   },
   "scripts": {
     "test": "phpunit ./t",
