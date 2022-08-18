@@ -1,6 +1,6 @@
 <?php
 
-class MapTest extends PHPUnit_Framework_TestCase
+class MapTest extends \PHPUnit\Framework\TestCase
 {
     public function testGet()
     {
@@ -28,9 +28,9 @@ class MapTest extends PHPUnit_Framework_TestCase
         $map = new \PFF\Map;
         $map->set(['fruit', 'apple'], 100);
         $output = $this->varDumpToString($map);
-        $this->assertContains('fruit', $output);
-        $this->assertContains('apple', $output);
-        $this->assertContains('100', $output);
+        $this->assertStringContainsString('fruit', $output);
+        $this->assertStringContainsString('apple', $output);
+        $this->assertStringContainsString('100', $output);
     }
 
     private function varDumpToString($anything)

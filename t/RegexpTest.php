@@ -1,6 +1,6 @@
 <?php
 
-class RegexpTest extends PHPUnit_Framework_TestCase
+class RegexpTest extends \PHPUnit\Framework\TestCase
 {
     function testEmail()
     {

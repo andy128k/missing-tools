@@ -1,6 +1,6 @@
 <?php
 
-class FormatTest extends PHPUnit_Framework_TestCase
+class FormatTest extends \PHPUnit\Framework\TestCase
 {
     public function testFlags()
     {
@@ -76,14 +76,14 @@ class FormatTest extends PHPUnit_Framework_TestCase
     public function testImpossibleDate()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('/Bad/');
+        $this->expectExceptionMessageMatches('/Bad/');
         \PFF\DateFormat::makeFormat(\PFF\DateFormat::DATE_LITTLE_ENDIAN | \PFF\DateFormat::DATE_MIDDLE_ENDIAN, \PFF\DateFormat::$dateControls);
     }
 
     public function testImpossibleTime()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('/Bad/');
+        $this->expectExceptionMessageMatches('/Bad/');
         \PFF\DateFormat::makeTimeFormat(\PFF\DateFormat::TIME_SECONDS, \PFF\DateFormat::$dateControls);
     }
 

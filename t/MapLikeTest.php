@@ -29,7 +29,7 @@ class TestArrayAccess implements ArrayAccess
     }
 }
 
-class MapLikeTest extends PHPUnit_Framework_TestCase
+class MapLikeTest extends \PHPUnit\Framework\TestCase
 {
     function testGetArray()
     {

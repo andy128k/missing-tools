@@ -1,6 +1,6 @@
 <?php
 
-class HtmlBuilderTest extends PHPUnit_Framework_TestCase
+class HtmlBuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function testTag()
     {

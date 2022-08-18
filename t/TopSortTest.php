@@ -2,7 +2,7 @@
 
 use PFF\Arr;
 
-class TopSortTest extends PHPUnit_Framework_TestCase
+class TopSortTest extends \PHPUnit\Framework\TestCase
 {
     function testAlchemy()
     {

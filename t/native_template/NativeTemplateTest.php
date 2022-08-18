@@ -1,6 +1,6 @@
 <?php
 
-class NativeTemplateTest extends PHPUnit_Framework_TestCase
+class NativeTemplateTest extends \PHPUnit\Framework\TestCase
 {
     public function testEscaping()
     {
@@ -16,7 +16,7 @@ class NativeTemplateTest extends PHPUnit_Framework_TestCase
     public function testErrorCatching()
     {
         $this->expectException(ErrorException::class);
-        $this->expectExceptionMessageRegExp('/undefined_variable/');
+        $this->expectExceptionMessageMatches('/undefined_variable/');
         $this->expectOutputString('');
 
         $nt = new \PFF\NativeTemplate(array(dirname(__FILE__)));
@@ -26,7 +26,7 @@ class NativeTemplateTest extends PHPUnit_Framework_TestCase
     public function testBadFile()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('/not found/');
+        $this->expectExceptionMessageMatches('/not found/');
         $this->expectOutputString('');
 
         $nt = new \PFF\NativeTemplate(array(dirname(__FILE__)));
